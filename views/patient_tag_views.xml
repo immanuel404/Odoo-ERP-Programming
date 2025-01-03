@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+  <record id="view_patient_tag_list" model="ir.ui.view">
+    <field name="name">patient.tag.list</field>
+    <field name="model">patient.tag</field>
+    <field name="arch" type="xml">
+      <list string="Patient Tags" editable="top">
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+      </list>
+    </field>
+  </record>
+
+
+  <record id="action_patient_tag" model="ir.actions.act_window">
+    <field name="name">Patient Tags</field>
+    <field name="res_model">patient.tag</field>
+    <field name="view_mode">list</field>
+    <field name="view_ids" eval="[Command.clear(),
+    (0,0,{'view_mode':'list', 'view_id':ref('view_patient_tag_list')}),
+    ]" />
+  </record>
+
+
+</odoo>
