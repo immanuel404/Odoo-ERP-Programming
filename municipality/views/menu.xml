@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_municipality_root"
+  name="KMTC"
+  web_icon="municipality,static/description/icon.png"
+  sequence="35"/>
+
+  <menuitem id="menu_contracts"
+  name="Contracts"
+  parent="menu_municipality_root"
+  action="action_municipality_contracts"/>
+
+  <menuitem id="menu_meters"
+  name="Meters"
+  parent="menu_municipality_root"
+  action="action_municipality_meters"/>
+
+  <menuitem id="menu_meter_readings"
+  name="Readings"
+  parent="menu_municipality_root"
+  action="action_municipality_meter_readings"/>
+
+</odoo>

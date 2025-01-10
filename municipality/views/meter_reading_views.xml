@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_meter_reading_list" model="ir.ui.view">
+    <field name="name">meter.reading.list</field>
+    <field name="model">meter.reading</field>
+    <field name="arch" type="xml">
+      <list string="Meter Readings">
+        <field name="meter_no"/>
+        <field name="erf"/>
+        <field name="contract"/>
+        <field name="end_date"/>
+        <field name="curr_reading" optional="hide"/>
+        <field name="usage" optional="hide"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_meter_reading_form" model="ir.ui.view">
+    <field name="name">meter.reading.form</field>
+    <field name="model">meter.reading</field>
+    <field name="arch" type="xml">
+      <form string="Meter Reading">
+
+        <sheet>
+          <group>
+
+            <group>
+              <field name="meter_no"/>
+              <field name="contract"/>
+              <field name="erf"/>
+              <field name="curr_reading"/>
+              <field name="usage"/>
+            </group>
+            <group>
+              <field name="reading_type"/>
+              <field name="start_date"/>
+              <field name="end_date"/>
+              <field name="prev_reading"/>
+            </group>
+
+          </group>
+        </sheet>
+        
+        <chatter/>
+
+      </form>
+    </field>
+  </record>
+  
+  <record id="action_municipality_meter_readings" model="ir.actions.act_window">
+    <field name="name">Meter Readings</field>
+    <field name="res_model">meter.reading</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[Command.clear(),
+    (0,0,{'view_mode':'list', 'view_id':ref('view_meter_reading_list')}),
+    (0,0,{'view_mode':'form', 'view_id':ref('view_meter_reading_form')}),
+    ]" />
+  </record>
+
+</odoo>

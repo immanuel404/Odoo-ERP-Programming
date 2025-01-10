@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mun_contract,access.mun.contract,model_mun_contract,base.group_user,1,1,1,1
+access_mun_contract_items,access.mun.contract.items,model_mun_contract_items,base.group_user,1,1,1,1
+access_mun_meter,access.mun.meter,model_mun_meter,base.group_user,1,1,1,1
+access_meter_reading,access.meter.reading,model_meter_reading,base.group_user,1,1,1,1
