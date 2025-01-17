@@ -3,3 +3,4 @@ access_mun_contract,access.mun.contract,model_mun_contract,base.group_user,1,1,1
 access_mun_contract_items,access.mun.contract.items,model_mun_contract_items,base.group_user,1,1,1,1
 access_mun_meter,access.mun.meter,model_mun_meter,base.group_user,1,1,1,1
 access_meter_reading,access.meter.reading,model_meter_reading,base.group_user,1,1,1,1
+access_dynamic_field,access.dynamic.field,model_dynamic_field,base.group_user,1,1,1,1

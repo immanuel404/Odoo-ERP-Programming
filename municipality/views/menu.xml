@@ -20,5 +20,15 @@
   name="Readings"
   parent="menu_municipality_root"
   action="action_municipality_meter_readings"/>
+  
+  <menuitem id="menu_dynamic_field"
+  name="Dynamic Field"
+  parent="menu_municipality_root"
+  action="action_dynamic_field"/>
+
+  <!-- <menuitem id="menu_report"
+  name="My Reports"
+  parent="menu_municipality_root"
+  action="action_my_report"/> -->
 
 </odoo>

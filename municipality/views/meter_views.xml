@@ -22,22 +22,21 @@
 
         <sheet>
           <group>
-
-            <group>
-              <field name="meter_no"/>
-              <field name="erf"/>
-              <field name="current_month"/>
-              <field name="last_month"/>
-              <field name="second_last_month"/>
-            </group>
-            <group>
-              <field name="client"/>
-              <field name="contract"/>
-              <field name="book_no"/>
-              <field name="alpha_no"/>
-              <field name="lot_no"/>
-            </group>
-
+            <button name="action_print_report" type="object" string="Print Report" class="oe_highlight"/>
+          </group>
+          <group>
+            <field name="meter_no"/>
+            <field name="erf"/>
+            <field name="current_month"/>
+            <field name="last_month"/>
+            <field name="second_last_month"/>
+          </group>
+          <group>
+            <field name="client"/>
+            <field name="contract"/>
+            <field name="book_no"/>
+            <field name="alpha_no"/>
+            <field name="lot_no"/>
           </group>
         </sheet>
         

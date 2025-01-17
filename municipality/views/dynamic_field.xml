@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>  
+
+  <record id="view_dynamic_field_list" model="ir.ui.view">
+    <field name="name">dynamic.field.list</field>
+    <field name="model">dynamic.field</field>
+    <field name="arch" type="xml">
+      <list string="Dynamic Field">
+        <field name="field_name"/>
+        <field name="field_type"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_dynamic_field_form" model="ir.ui.view">
+    <field name="name">dynamic.field.form</field>
+    <field name="model">dynamic.field</field>
+    <field name="arch" type="xml">
+      <form string="Dynamic Field">
+        <sheet>
+          <group>
+            <field name="field_name"/>
+            <field name="field_type"/>
+          </group>
+        </sheet>
+        
+        <chatter/>
+
+      </form>
+    </field>
+  </record>
+
+  <record id="action_dynamic_field" model="ir.actions.act_window">
+    <field name="name">Add Field</field>
+    <field name="res_model">dynamic.field</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[Command.clear(),
+    (0,0,{'view_mode':'list', 'view_id':ref('view_dynamic_field_list')}),
+    (0,0,{'view_mode':'form', 'view_id':ref('view_dynamic_field_form')}),
+    ]" />
+  </record>
+
+</odoo>

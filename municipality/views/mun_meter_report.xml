@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="mun_meter_report_template">
+    <t t-call="web.html_container">
+      <t t-call="web.basic_layout">
+        <div class="page">
+          <h2>Meter Master Report</h2>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Meter No.</th>
+                <th>Contract</th>
+                <th>Client</th>
+                <th>ERF</th>
+                <th>Book No.</th>
+                <th>Alpha No.</th>
+                <th>Lot No.</th>
+                <th>Current Month's Usage</th>
+                <th>Last Month's Usage</th>
+                <th>Second Last Month's Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr t-foreach="docs" t-as="doc">
+                <td t-esc="doc.meter_no"/>
+                <td t-esc="doc.contract.name if doc.contract else ''"/>
+                <td t-esc="doc.client"/>
+                <td t-esc="doc.erf"/>
+                <td t-esc="doc.book_no"/>
+                <td t-esc="doc.alpha_no"/>
+                <td t-esc="doc.lot_no"/>
+                <td t-esc="doc.current_month"/>
+                <td t-esc="doc.last_month"/>
+                <td t-esc="doc.second_last_month"/>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

@@ -28,7 +28,7 @@ class MeterReading(models.Model):
       self.contract = self.meter_no.contract.reference
       self.erf = self.meter_no.erf
 
-      # find last reading
+      # find last meter reading
       last_reading = self.env['meter.reading'].search([('contract','=',self.contract)], order='end_date desc', limit=1)
       
       # Get the current month and year
@@ -52,19 +52,26 @@ class MeterReading(models.Model):
     for record in self:
       if record.start_date:
         
-        # find last reading
-        last_reading = self.env['meter.reading'].search([('contract','=',self.contract)], order='end_date desc', limit=1) 
-        if last_reading and last_reading.start_date:
-          # Compare the month and year of the last reading and the current start date
-          last_reading_month = last_reading.start_date.month
-          last_reading_year = last_reading.start_date.year
-          current_month = record.start_date.month
-          current_year = record.start_date.year
-          # Check if the last reading is in the same month or more recent
-          if (last_reading_year > current_year or (last_reading_year == current_year and last_reading_month >= current_month)):
-            raise ValidationError(
-              "Invalid date. / A reading already exists for this period."
-            )
+        # find last meter reading
+        reading = self.env['meter.reading'].search([('contract','=',self.contract)], order='end_date desc', limit=1) 
+        if reading and reading.start_date:
+          reading_month = reading.start_date.month
+          reading_year = reading.start_date.year
+          current_start_month = record.start_date.month
+          current_start_year = record.start_date.year
+
+          # check if the last reading is in the same month or more recent
+          if (reading_year == current_start_year and reading_month == current_start_month):
+            raise ValidationError("Invalid date! Reading already exists for this period.")
+          
+          # check if a more recent recent reading exist past the entered date period
+          if (reading_year >= current_start_year and reading_month > current_start_month):
+            raise ValidationError("Invalid date! A more recent recent reading exists past the entered date period.")
+         
+          # check is not in future date
+          current_date = datetime.today()
+          if (current_start_year >= current_date.year and current_start_month > current_date.month):
+            raise ValidationError("Invalid date. Start date cannot be in a future month.")
 
         # add end_date to field
         first_day_next_month = (record.start_date.replace(day=1) + timedelta(days=32)).replace(day=1)
@@ -78,3 +85,40 @@ class MeterReading(models.Model):
     for record in self:
       if record.curr_reading:
         self.usage = record.curr_reading - record.prev_reading
+
+
+  # update readings on save event
+  @api.model_create_multi
+  def create(self, vals_list):
+    for vals in vals_list:
+
+      record = super(MeterReading, self).create(vals)
+
+      meter = self.env['mun.meter'].search([('id', '=', vals.get('meter_no'))], limit=1)
+      if not meter:
+        raise ValidationError("The selected meter does not exist.")
+      
+      # if record_to_update:
+      current_date = datetime.today()
+      data = {}
+
+      # Check if start_date is in the current month
+      if record.start_date and record.start_date.month == current_date.month and record.start_date.year == current_date.year:
+        data['current_month'] = record.usage
+
+      # Check if start_date is in the previous month
+      previous_month_date = current_date.replace(day=1) - timedelta(days=1)
+      if record.start_date and record.start_date.month == previous_month_date.month and record.start_date.year == previous_month_date.year:
+        data['last_month'] = record.usage
+
+      # Check if start_date is two months back
+      two_months_back_date = previous_month_date.replace(day=1) - timedelta(days=1)
+      if record.start_date and record.start_date.month == two_months_back_date.month and record.start_date.year == two_months_back_date.year:
+        data['second_last_month'] = record.usage
+
+      # Update the related record if data is not empty
+      if data:
+        meter.write(data)
+
+      return record
+    
